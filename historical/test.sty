@@ -1,0 +1,163 @@
+% Exemple d’extension par Tobias Oetiker
+\ProvidesPackage{test}
+%-----------------------------------------------------------------------
+%                              Type de document: DS
+%-----------------------------------------------------------------------
+%\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{fancyhdr}
+
+\usepackage[pdftex,                %
+    bookmarks         = true,%     % Signets
+    bookmarksnumbered = true,%     % Signets numérotés
+    pdfpagemode       = None,%     % Signets/vignettes fermé à l'ouverture
+    pdfstartview      = FitH,%     % La page prend toute la largeur
+    pdfpagelayout     = SinglePage,% Vue par page
+    colorlinks        = true,%     % Liens en couleur
+    urlcolor          = magenta,%  % Couleur des liens externes
+    pdfborder         = {0 0 0}%   % Style de bordure : ici, pas de bordure
+    ]{hyperref}%                   % Utilisation de HyperTeX
+
+
+%\pdfoutput=0 % uncomment this to run PDFTeX in TeX mode
+\usepackage{ifpdf}
+\ifx\pdftexversion\undefined %if using TeX
+  \usepackage{graphicx}
+\else %if using PDFTeX
+  \usepackage[pdftex]{graphicx}
+\fi
+\ifpdf %if using PDFTeX in PDF mode
+  \DeclareGraphicsExtensions{.pdf,.png,.mps}
+  %\usepackage{pgf}
+\else %if using TeX or PDFTeX in TeX mode
+  \usepackage{graphicx}
+  \DeclareGraphicsExtensions{.eps,.bmp}
+  \DeclareGraphicsRule{.emf}{bmp}{}{}% declare EMF filename extension
+  \DeclareGraphicsRule{.png}{bmp}{}{}% declare PNG filename extension
+\fi
+
+\usepackage{wrapfig}% package for wrapfigure environment
+\usepackage{color}
+\usepackage{ulem}
+%\usepackage{amsfonts}
+\usepackage{makeidx}
+\usepackage{amsmath,amssymb,framed,calc,multicol,lscape,fancybox}
+% Pour les graphiques:
+% Quelques fonctionnalités utiles:
+\usepackage{array,multirow,enumerate}
+\usepackage{fourier}
+\usepackage{eurosym}
+%\usepackage{pst-all,pst-eucl}
+%-----------------------------------------------------------------------
+%                              Mise en page générale:
+%-----------------------------------------------------------------------
+
+\columnseprule0.25pt
+\parindent 0pt\topmargin 0pt\headheight 0pt\headsep 0pt\footskip 0pt
+\usepackage[dvips,a4paper,margin=6mm]{geometry}
+\everymath{\displaystyle}
+
+%-----------------------------------------------------------------------
+%                       Macros de présentation des exercices:
+%                               Utilisation: \exo
+%-----------------------------------------------------------------------
+\newcounter{nexo}
+\setcounter{nexo}{0}
+
+\newcounter{nexop}
+\setcounter{nexop}{0}
+
+%exercice sans barème:
+\newcommand{\exo}{
+    \stepcounter{nexo}
+    {\textbf{$\triangleright$ Exercice \arabic{nexo} : \hrulefill }}
+    \par
+}
+% exercice avec barème:
+\newcommand{\exop}[1]{
+    \stepcounter{nexop}
+    {\textbf{$\triangleright$ Exercice \arabic{nexop} \hrulefill (#1 points) :}}
+}
+% Questions
+\newenvironment{questions}{\begin{enumerate}[1 $\, \diamond$]}{\end{enumerate}}
+%-----------------------------------------------------------------------
+%                                 Titrages du document :
+% \titrage {nom}{classe}
+% \ds {nom}{classe}{coef}{date}{temps}{calculatrice}
+%-----------------------------------------------------------------------
+\newcommand{\titrage}[2]{
+{\Large #1}\hfill#2
+\par\rule[+6pt]{\linewidth}{0.5mm}
+\par
+}
+
+\newcommand{\ds}[6]{
+% \ds{Devoir de ...}{Classe}{coeff}{temps en mn}{calculatrice autorisée ou non}
+% nom et classe
+{\Large #1}\hfill#2
+\par
+% coef et temps
+Coefficient: $#3$ \hfill $#4\,mn$
+\par
+% calculatrice + date automatique
+Calculatrice #5 \hfill #6
+% on complète par un trait horizontal
+\par\rule[+6pt]{\linewidth}{0.5mm}
+\par
+}
+
+%-----------------------------------------------------------------------
+%                                 Intervalles :
+%           f:fermé, o:ouvert, fo: fermé-ouvert, of: ouvert-fermé
+%                                 Utilisation:
+%                         \intfo{-1}{2} donnera [-1;2[
+%-----------------------------------------------------------------------
+\newcommand{\intf}[2]{\left[ #1 ; #2 \right]}
+\newcommand{\into}[2]{\left] #1 ; #2 \right[}
+\newcommand{\intfo}[2]{\left[ #1 ; #2 \right[}
+\newcommand{\intof}[2]{\left] #1 ; #2 \right]}
+%-----------------------------------------------------------------------
+%                                 Repères et normes:
+%                               Utilisation:
+%                         \roij donnera (O,i,j)
+%-----------------------------------------------------------------------
+% Pour définir une norme dont la taille s'adapte à celle de
+% l'expression normée...
+\newcommand{\norme}[1]{\ensuremath{\left\|#1\right\|}}
+\newcommand{\vecteur}[1]{\overrightarrow{\strut #1}}
+%Les vecteurs i, j et k
+\newcommand{\vimath}{\vecteur{i}}
+\newcommand{\vjmath}{\vecteur{j}}
+\newcommand{\vkmath}{\vecteur{k}}
+\newcommand{\vnul}{\vecteur{0}}
+%le repère (o,i,j)
+\newcommand{\roij}{\ensuremath{(O,\vimath,\vjmath)}}
+\newcommand{\collroij}{\ensuremath{(O,I,J)}}
+
+%-----------------------------------------------------------------------
+%                     Raccourcis pour * :
+%-----------------------------------------------------------------------
+% le symbole de multiplication:
+\def\*{\times}
+% PGCD et PPCM :
+\def\pgcd{\mathop{\rm PGCD}\nolimits}
+\def\ppcm{\mathop{\rm ppcm}\nolimits}
+
+% Les abreviations:
+\newtheorem{ppte}{Propriété}
+\newtheorem{thm}{Théorème}
+\newtheorem{defi}{Définition}
+\newtheorem{lemme}{Lemme}
+\newtheorem{coro}{Corollaire}
+\newtheorem{prop}{Proposition}
+\newtheorem{reg}{Règle}
+\newtheorem{conj}{Conjecture}
+\newtheorem{remar}{Remarque}
+\newtheorem{exem}{Exemple}
+\newtheorem{exems}{Exemples}
+\newcommand{\para}[1]{
+            \color{red}
+            \section {\textit{#1}}
+            \color{black}
+                        }

@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{python}
+
+\begin{document}
+
+\href{http://www.python.org/}{Python}
+
+\begin{itemize}
+\begin{python}
+# -*- coding: utf-8 -*-
+#!/usr/bin/python
+
+for i in range(10):
+    out = r"\item Le carr\'e de %s est %s car $%s \times %s=%s$"%(i, i*i,i,i,i*i)
+    print out
+print r"\item etc."
+\end{python}
+\end{itemize}
+
+\href{http://code.google.com/p/sympy/}{SymPy}
+
+\begin{itemize}
+\begin{python}
+# -*- coding: utf-8 -*-
+#!/usr/bin/python
+
+from sympy import latex
+from sympy import *
+
+x,y = symbols('x,y')
+
+def is_eqal(exp1, exp2):
+    exp1 = exp1.replace("$","")
+    exp2 = exp2.replace("$","")
+    return "$%s=%s$"%(exp1,exp2)
+
+for el in ( (x+y)**2, (x+y)**3, (x+y)**4 ):
+    print r"\item[$\bullet$] " + is_eqal(  latex(el), latex(el.expand()) )
+
+\end{python}
+\end{itemize}
+
+
+\begin{python}
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.linspace(-np.pi, np.pi, 500)
+y = np.sin(1/x)
+plt.plot(x,y)
+plt.savefig('myfig.pdf')
+print r'\includegraphics[width=\linewidth]{myfig}'
+\end{python}
+
+\end{document}

@@ -1,0 +1,87 @@
+\documentclass[a4]{article}
+\usepackage{test}
+\usepackage{python}
+
+
+%-----------------------------------------------------------------------
+%                       Début du document
+%-----------------------------------------------------------------------
+\begin{document}
+
+% Les Bases
+Il est possible d'utiliser la langage de script \href{http://www.python.org/}{Python} pour réaliser des boucles, voire des calculs à l'intérieur d'un document \LaTeX~ à l'aide du package \href{http://www.imada.sdu.dk/~ehmsen/pythonlatex.php}{python.sty}\\
+
+\exop{5}\\
+Voici le premier énoncé, vous devez compléter la liste des carrés :
+\begin{itemize}
+\begin{python}
+# -*- coding: utf-8 -*-
+#!/usr/bin/python
+
+for i in range(10):
+    out = r"\item Le carr\'e de %s est %s car $%s \times %s=%s$"%(i, i*i,i,i,i*i)
+    print out
+print r"\item etc."
+\end{python}
+\end{itemize}
+
+\par
+\vskip 0.5cm
+
+% Développements
+Enfin, nous pouvons aussi utiliser le magnifique travail réalisé par l'équipe de \href{http://code.google.com/p/sympy/}{SymPy}, 
+nous allons l'utiliser ici pour développer quelques expressions :\\
+
+\exop{5}\\
+Voici quelques développements :
+\begin{itemize}
+\begin{python}
+# -*- coding: utf-8 -*-
+#!/usr/bin/python
+
+from sympy import latex
+from sympy import *
+
+x,y = symbols('xy')
+
+def is_eqal(exp1, exp2):
+    exp1 = exp1.replace("$","")
+    exp2 = exp2.replace("$","")
+    return "$%s=%s$"%(exp1,exp2)
+
+for el in ( (x+y)**2, (x+y)**3, (x+y)**4 ):
+    print r"\item[$\bullet$] " + is_eqal(  latex(el), latex(el.expand()) )   
+
+\end{python}
+\end{itemize}
+\par
+\vskip 0.5cm
+
+De même, nous pouvons aussi dériver facilement une expression, la plupart des fonctions usuelles 
+étant implémentées dans \href{http://code.google.com/p/sympy/}{SymPy}.\\
+% Dérivations
+\exop{5}\\
+Voici quelques dérivations :
+\begin{itemize}
+
+\begin{python}
+# -*- coding: utf-8 -*-
+#!/usr/bin/python
+
+from sympy import latex
+from sympy import *
+
+x,y = symbols('xy')
+
+def is_eqal(exp1, exp2):
+    exp1 = exp1.replace("$","")
+    exp2 = exp2.replace("$","")
+    return "$%s=%s$"%(exp1,exp2)
+
+for el in ( (x+y)**2, tan(x), sin(2*x) ):
+    print r"\item[$\bullet$] La d\'eriv\'ee de \textbf{%s} par rapport \`a $x$ est \textbf{%s}"%( latex(el), latex(diff(el,x)) )   
+
+\end{python}
+\end{itemize}
+
+\end{document}
